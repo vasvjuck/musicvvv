@@ -16,10 +16,6 @@ export function Sidebar({ className }: { className?: string }) {
               Listen Now
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <LayoutGrid className="mr-2 h-4 w-4" />
-              Browse
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
               <Radio className="mr-2 h-4 w-4" />
               Radio
             </Button>
