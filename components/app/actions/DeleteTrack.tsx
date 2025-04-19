@@ -11,7 +11,7 @@ interface DeleteTrackButtonProps {
     trackTitle: string;
 }
 
-export function DeleteTrackButton({ trackId, trackTitle }: DeleteTrackButtonProps) {
+export const DeleteTrackButton = ({ trackId, trackTitle }: DeleteTrackButtonProps) => {
     const { mutate: deleteTrack, isLoading: isDeleting } = useDeleteTrack();
 
     const handleConfirm = () => {

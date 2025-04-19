@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { PlayCircle, LayoutGrid, Radio } from "lucide-react";
+import { PlayCircle, Radio } from "lucide-react";
 
-export function Sidebar({ className }: { className?: string }) {
+export const Sidebar = ({ className }: { className?: string }) => {
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">

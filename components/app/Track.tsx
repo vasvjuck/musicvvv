@@ -11,7 +11,7 @@ interface TrackProps extends React.HTMLAttributes<HTMLDivElement> {
     track: Track;
 }
 
-export function Track({ track }: TrackProps) {
+export const Track = ({ track }: TrackProps) => {
     const placeholder = `https://picsum.photos/seed/${encodeURIComponent(
         track.id
     )}/100/100`;
