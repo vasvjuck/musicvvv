@@ -3,6 +3,8 @@ import { PlayIcon, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { components } from "@/lib/api/types";
 import { DeleteTrackButton } from "./actions/DeleteTrack";
+import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
 
 // todo
 type Track = components["schemas"]["Track"];
@@ -12,9 +14,31 @@ interface TrackProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Track = ({ track }: TrackProps) => {
+    // const audioElementRef = useRef(null);
+
+    // const [isAudioPlaying, setIsAudioPlaying] = useState(false)
+    // const [isIndicatorActive, setIsIndicatorActive] = useState(false)
+
+
     const placeholder = `https://picsum.photos/seed/${encodeURIComponent(
         track.id
     )}/100/100`;
+
+    const audioElementRef = useRef<HTMLAudioElement>(null);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+
+    const toggleAudio = () => {
+        setIsAudioPlaying((prev) => !prev);
+    };
+
+    useEffect(() => {
+        if (!audioElementRef.current) return;
+        if (isAudioPlaying) {
+            audioElementRef.current.play();
+        } else {
+            audioElementRef.current.pause();
+        }
+    }, [isAudioPlaying]);
 
     return (
         <div
@@ -56,9 +80,28 @@ export const Track = ({ track }: TrackProps) => {
                     <Button
                         variant="outline"
                         size="icon"
-                        onClick={() => console.log("play")}
+                        onClick={toggleAudio}
+                        className="gap-0.5"
                     >
-                        <PlayIcon size={16} />
+                        <audio
+                            ref={audioElementRef}
+                            className="hidden"
+                            src="/audio/loop.mp3"
+                            loop
+                        />
+                        {isAudioPlaying ? (
+                            <>
+                                {[1, 2, 3, 4].map((bar) => (
+                                    <div
+                                        key={bar}
+                                        className={clsx("indicator-line active")}
+                                        style={{ animationDelay: `${bar * 0.1}s` }}
+                                    />
+                                ))}
+                            </>
+                        ) : (
+                            <PlayIcon size={16} />
+                        )}
                     </Button>
                 </div>
             </div>
