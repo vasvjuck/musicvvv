@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PlayIcon, EditIcon, Trash2Icon } from "lucide-react";
+import { PlayIcon, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { components } from "@/lib/api/types";
 import { DeleteTrackButton } from "./actions/DeleteTrack";
@@ -39,32 +39,29 @@ export const Track = ({ track }: TrackProps) => {
                     <h3 className="text-sm font-semibold">{track.title}</h3>
                     <p className="text-xs text-muted-foreground">{track.artist}</p>
                 </div>
+                <div className="flex gap-2">
+                    <div className="flex gap-1 items-center md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => console.log("edit")}
+                        >
+                            <EditIcon className="h-4 w-4" />
+                        </Button>
+                        <DeleteTrackButton
+                            trackId={track.id}
+                            trackTitle={track.title}
+                        />
+                    </div>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => console.log("play")}
+                    >
+                        <PlayIcon size={16} />
+                    </Button>
+                </div>
             </div>
-
-            <div className="flex gap-1 items-center md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200">
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => console.log("edit")}
-                    aria-label="Edit track"
-                >
-                    <EditIcon className="h-4 w-4" />
-                </Button>
-                <DeleteTrackButton
-                    trackId={track.id}
-                    trackTitle={track.title}
-                />
-            </div>
-
-            <Button
-                variant="outline"
-                size="icon"
-                onClick={() => console.log("play")}
-                aria-label="Play track"
-                className="absolute bottom-2 right-2 z-10"
-            >
-                <PlayIcon className="h-4 w-4" />
-            </Button>
         </div>
     );
 }
