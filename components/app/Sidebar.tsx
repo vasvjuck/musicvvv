@@ -15,7 +15,7 @@ export function Sidebar({ className }: { className?: string }) {
               <PlayCircle className="mr-2 h-4 w-4" />
               Listen Now
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start" disabled>
               <Radio className="mr-2 h-4 w-4" />
               Radio
             </Button>

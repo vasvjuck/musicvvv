@@ -4,15 +4,17 @@ import { PlusCircle, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 
-import { PodcastEmptyPlaceholder } from "./components/podcast-empty-placeholder";
+import { PodcastEmptyPlaceholder } from "@/components/app/podcast-empty-placeholder";
 import { useTracks } from "@/hooks/useTracks";
-import { Track } from "./components/Track";
-import { Sidebar } from "./components/Sidebar";
+import { Track } from "@/components/app/Track";
+import { Sidebar } from "@/components/app/Sidebar";
+import { AddMusicDialog } from "@/components/app/AddMusicDialog";
 
 export default function MusicPage() {
-  const { data: tracks } = useTracks({ page: 1, limit: 20 });
+  const { data: tracks, isLoading } = useTracks({ page: 1, limit: 20 });
 
   return (
     <div className="min-h-screen bg-background">
@@ -39,7 +41,6 @@ export default function MusicPage() {
             <Sidebar />
           </aside>
 
-          {/* Main content */}
           <main className="col-span-5 lg:col-span-4 lg:border-l">
             <div className="h-full px-4 py-6 lg:px-8">
               <Tabs defaultValue="music" className="h-full space-y-6">
@@ -47,12 +48,11 @@ export default function MusicPage() {
                   <TabsList>
                     <TabsTrigger value="music">Music</TabsTrigger>
                     <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
-                    <TabsTrigger value="live" disabled>Live</TabsTrigger>
+                    <TabsTrigger value="live" disabled>
+                      Live
+                    </TabsTrigger>
                   </TabsList>
-                  <Button>
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Add music
-                  </Button>
+                  <AddMusicDialog />
                 </div>
 
                 <TabsContent value="music" className="border-none p-0 outline-none">
@@ -63,10 +63,32 @@ export default function MusicPage() {
                     </div>
                   </div>
                   <Separator className="my-4" />
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {tracks?.data?.map((track) => (
-                      <Track key={track.id} track={track} aspectRatio="portrait" />
-                    ))}
+                    {isLoading
+                      ? Array.from({ length: 8 }).map((_, idx) => (
+                        <div
+                          key={idx}
+                          className="relative flex flex-col justify-between gap-4 p-4 bg-card rounded-2xl shadow-sm animate-pulse"
+                        >
+                          <div className="flex items-center gap-4 justify-between w-full">
+                            <div className="flex-shrink-0">
+                              <Skeleton className="w-16 h-16 rounded-lg" />
+                            </div>
+                            <div className="flex-grow space-y-2">
+                              <Skeleton className="h-4 w-3/4 rounded-md" />
+                              <Skeleton className="h-3 w-1/2 rounded-md" />
+                            </div>
+                          </div>
+                          <div className="absolute bottom-2 right-2">
+                            <Skeleton className="w-8 h-8 rounded-full" />
+                          </div>
+                        </div>
+                      ))
+                      :
+                      tracks?.data?.map((track) => (
+                        <Track key={track.id} track={track} aspectRatio="portrait" />
+                      ))}
                   </div>
                 </TabsContent>
 
