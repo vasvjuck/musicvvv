@@ -39,9 +39,11 @@ export default function MusicLayout({
                         <Tabs defaultValue="music">
                             <TabsList>
                                 <TabsTrigger value="music">Music</TabsTrigger>
-                                <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
-                                <TabsTrigger value="live" disabled>
-                                    Live
+                                <TabsTrigger
+                                    value="podcasts"
+                                    disabled
+                                >
+                                    Podcasts
                                 </TabsTrigger>
                             </TabsList>
                         </Tabs>

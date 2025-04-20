@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { useDeleteTrack } from "@/hooks/useTracks";
+import { useDeleteTrack } from "@/hooks/api/useTracks";
 
 interface DeleteTrackButtonProps {
     trackId: string;
