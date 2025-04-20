@@ -8,11 +8,11 @@ type Track = components["schemas"]["Track"];
 type TrackList = paths["/api/tracks"]["get"]["responses"]["200"]["content"]["application/json"];
 
 export const tracksApi = {
-    list: (params?: {
+    get: (params?: {
         page?: number;
         limit?: number;
-        sort?: "title" | "artist" | "album" | "createdAt";
-        order?: "asc" | "desc";
+        sort?: string;
+        order?: string;
         search?: string;
         genre?: string;
         artist?: string;

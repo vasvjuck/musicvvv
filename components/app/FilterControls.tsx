@@ -28,9 +28,12 @@ export const FilterSelect = ({ label, options, value, onChange, width = '160px' 
         <SelectContent>
             <SelectGroup>
                 <SelectLabel>{label}</SelectLabel>
-                {options.map(opt => (
-                    <SelectItem key={opt.value || opt} value={opt.value || opt.toLowerCase()}>
-                        {opt.label || opt}
+                {options.map(option => (
+                    <SelectItem
+                        key={option.value || option}
+                        value={option.value || option}
+                    >
+                        {option.label || option}
                     </SelectItem>
                 ))}
             </SelectGroup>

@@ -3,10 +3,10 @@ import { useCallback, useMemo } from "react";
 export const usePagination = (
     totalPages: number,
     currentPage: number,
-    setPage: void
+    setPage: (number: number) => void
 ) => {
     const goTo = useCallback(
-        page => {
+        (page: number) => {
             const next = Math.max(1, Math.min(totalPages, page));
             setPage(next);
         },

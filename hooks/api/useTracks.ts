@@ -6,10 +6,10 @@ const KEYS = {
     track: (slug: string) => [...KEYS.tracks(), "track", slug] as const,
 };
 
-export function useTracks(params?: Parameters<typeof tracksApi.list>[0]) {
+export function useTracks(params?: Parameters<typeof tracksApi.get>[0]) {
     return useQuery({
         queryKey: [...KEYS.tracks(), params],
-        queryFn: () => tracksApi.list(params),
+        queryFn: () => tracksApi.get(params),
     });
 }
 

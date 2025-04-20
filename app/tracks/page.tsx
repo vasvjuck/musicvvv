@@ -8,14 +8,14 @@ import { usePagination } from "@/hooks/common/usePagination";
 import { FilterSelect, SearchInput, SortOrderToggle } from "@/components/app/FilterControls";
 import { TracksList } from "@/components/app/TracksList";
 import { PaginationControls } from "@/components/app/PaginationControls";
-import { GENRE_OPTIONS, SORT_OPTIONS } from "@/lib/constants";
+import { SORT_OPTIONS } from "@/lib/constants";
+import { useGenres } from "@/hooks/api/useGenres";
 
 export default function MusicPage() {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('title');
   const [order, setOrder] = useState('asc');
-  const [artist, setArtist] = useState('all');
-  const [genre, setGenre] = useState('all');
+  const [genre, setGenre] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
 
   const debouncedSearch = useDebouncedSearch(searchTerm);
@@ -26,17 +26,20 @@ export default function MusicPage() {
     limit,
     sort,
     order,
-    artist: artist !== 'all' ? artist : undefined,
-    genre: genre !== 'all' ? genre : undefined,
+    genre: genre !== 'All' ? genre : undefined,
     search: debouncedSearch || undefined,
   });
+
+  const { data: genres = [] } = useGenres()
 
   const totalPages = data?.meta?.totalPages || 1;
   const { pages, goTo } = usePagination(totalPages, page, setPage);
 
-  const handleSortChange = val => { setSort(val); setPage(1); };
-  const handleGenreChange = val => { setGenre(val); setPage(1); };
-  const toggleOrder = () => { setOrder((o) => (o === 'asc' ? 'desc' : 'asc')); setPage(1); };
+  const handleSortChange = (val: string) => { setSort(val); setPage(1); };
+  const handleGenreChange = (val: string) => { setGenre(val); setPage(1); };
+  const toggleOrder = () => {
+    setOrder(order => (order === 'asc' ? 'desc' : 'asc')); setPage(1);
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-112px)]">
@@ -50,8 +53,8 @@ export default function MusicPage() {
           width="140px"
         />
         <FilterSelect
-          label="Filter Genre"
-          options={GENRE_OPTIONS}
+          label="Genre"
+          options={['All', ...genres]}
           value={genre}
           onChange={handleGenreChange}
         />
@@ -59,7 +62,11 @@ export default function MusicPage() {
       </div>
       <Separator />
       <div className="flex-grow overflow-y-auto mt-4">
-        <TracksList tracks={data?.data || []} isLoading={isLoading} limit={limit} />
+        <TracksList
+          tracks={data?.data || []}
+          isLoading={isLoading}
+          limit={limit}
+        />
       </div>
       <PaginationControls pages={pages} currentPage={page} goTo={goTo} />
     </div>
