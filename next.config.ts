@@ -6,6 +6,20 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*' },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/tracks',
+        permanent: false,
+      },
+    ];
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
 };
 
 export default nextConfig;

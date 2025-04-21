@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { tracksApi } from "@/lib/api/tracks";
 
-const KEYS = {
+export const KEYS = {
     tracks: () => ["tracks"] as const,
     track: (slug: string) => [...KEYS.tracks(), "track", slug] as const,
 };
