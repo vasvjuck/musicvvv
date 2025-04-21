@@ -14,16 +14,6 @@ interface TrackProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Track = ({ track }: TrackProps) => {
-    // const audioElementRef = useRef(null);
-
-    // const [isAudioPlaying, setIsAudioPlaying] = useState(false)
-    // const [isIndicatorActive, setIsIndicatorActive] = useState(false)
-
-
-    const placeholder = `https://picsum.photos/seed/${encodeURIComponent(
-        track.id
-    )}/100/100`;
-
     const audioElementRef = useRef<HTMLAudioElement>(null);
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
@@ -48,14 +38,11 @@ export const Track = ({ track }: TrackProps) => {
                 <div className="flex-shrink-0">
                     <div className="aspect-square w-16 overflow-hidden rounded-lg bg-muted">
                         <Image
-                            src={track.coverImage || placeholder}
+                            src={track?.coverImage || '/track_placeholder.png'}
                             alt={track.title}
-                            width={100}
-                            height={100}
-                            onError={(e) => {
-                                (e.currentTarget as HTMLImageElement).src = placeholder;
-                            }}
-                            className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-125"
+                            width={64}
+                            height={64}
+                            className="object-cover w-full h-full"
                         />
                     </div>
                 </div>

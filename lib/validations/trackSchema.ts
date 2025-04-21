@@ -7,11 +7,11 @@ export const trackSchema = z.object({
     genres: z
         .array(z.string().min(1))
         .min(1, "At least one genre is required"),
-    // coverImage: z
-    //     .string()
-    //     .url("Must be a valid URL")
-    //     .optional()
-    //     .or(z.literal("")),
+    coverImage: z
+        .string()
+        .url("Must be a valid URL")
+        .optional()
+        .or(z.literal("")),
 });
 
 export type TrackInput = z.infer<typeof trackSchema>;

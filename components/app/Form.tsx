@@ -27,6 +27,8 @@ import { Input } from "@/components/ui/input"
 import { trackSchema } from "@/lib/validations/trackSchema"
 import { useGenres } from "@/hooks/api/useGenres"
 import { z } from "zod"
+import Image from "next/image"
+import { isValidUrl } from "@/lib/utils"
 
 export function Form({ onSubmit }: { onSubmit: (values: z.infer<typeof trackSchema>) => void }) {
     const { data: genres = [] } = useGenres()
@@ -38,6 +40,7 @@ export function Form({ onSubmit }: { onSubmit: (values: z.infer<typeof trackSche
             artist: "",
             album: "",
             genres: [],
+            coverImage: ""
         },
     })
 
@@ -47,6 +50,12 @@ export function Form({ onSubmit }: { onSubmit: (values: z.infer<typeof trackSche
     })
 
     const selectedGenres = form.watch("genres") || []
+    const trackImage = form.watch("coverImage")?.trim();
+
+    const previewSrc =
+        trackImage && isValidUrl(trackImage)
+            ? trackImage
+            : "/track_placeholder.png"
 
     return (
         <ShadcnForm {...form}>
@@ -140,6 +149,31 @@ export function Form({ onSubmit }: { onSubmit: (values: z.infer<typeof trackSche
                             </div>
                             <FormMessage />
                         </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="coverImage"
+                    render={({ field }) => (
+                        <div className="flex gap-3">
+                            <FormItem className="w-full">
+                                <FormLabel>Cover Image URL</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="https://example.com/cover.jpg"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            <Image
+                                height={86}
+                                width={86}
+                                src={previewSrc}
+                                alt="Cover preview"
+                                className="rounded-lg object-cover aspect-square"
+                            />
+                        </div>
                     )}
                 />
                 <Button type="submit">Submit</Button>
