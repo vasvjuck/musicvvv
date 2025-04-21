@@ -103,18 +103,17 @@ export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
                             Add or replace the audio file for this track. Max size 10 MB.
                         </DialogDescription>
                     </DialogHeader>
-                    {!audioUrl ? (
+                    {!track?.audioFile ? (
                         <ShadcnForm {...form}>
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                                 <FormItem>
-                                    <FormLabel htmlFor="file-input">Select File</FormLabel>
+                                    <FormLabel>Select File</FormLabel>
                                     <FormControl>
                                         <Controller
                                             name="file"
                                             control={control}
                                             render={({ field }) => (
                                                 <Input
-                                                    id="file-input"
                                                     type="file"
                                                     accept=".mp3, .mp4, .wav"
                                                     onChange={(e) => field.onChange(e.target.files?.[0])}
@@ -122,9 +121,7 @@ export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
                                             )}
                                         />
                                     </FormControl>
-                                    <FormMessage>
-                                        {errors.file && errors.file.message}
-                                    </FormMessage>
+                                    <FormMessage />
                                 </FormItem>
                                 <div className="flex justify-end space-x-2">
                                     <Button
