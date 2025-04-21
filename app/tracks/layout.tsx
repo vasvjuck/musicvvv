@@ -3,9 +3,9 @@
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/app/Sidebar";
-import { AddMusicDialog } from "@/components/app/AddMusicDialog";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CreateTrack } from "@/components/app/actions/CreateTrack";
 
 export default function MusicLayout({
     children,
@@ -47,7 +47,7 @@ export default function MusicLayout({
                                 </TabsTrigger>
                             </TabsList>
                         </Tabs>
-                        <AddMusicDialog />
+                        <CreateTrack />
                     </div>
                     {children}
                 </div>

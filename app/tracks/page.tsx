@@ -13,8 +13,8 @@ import { useGenres } from "@/hooks/api/useGenres";
 
 export default function MusicPage() {
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState('title');
-  const [order, setOrder] = useState('asc');
+  const [sort, setSort] = useState('createdAt');
+  const [order, setOrder] = useState('desc');
   const [genre, setGenre] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
 
