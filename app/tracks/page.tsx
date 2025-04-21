@@ -43,22 +43,24 @@ export default function MusicPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-112px)]">
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
         <SearchInput value={searchTerm} onChange={setSearchTerm} />
-        <FilterSelect
-          label="Sort By"
-          options={SORT_OPTIONS}
-          value={sort}
-          onChange={handleSortChange}
-          width="140px"
-        />
-        <FilterSelect
-          label="Genre"
-          options={['All', ...genres]}
-          value={genre}
-          onChange={handleGenreChange}
-        />
-        <SortOrderToggle order={order} onToggle={toggleOrder} />
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <FilterSelect
+            label="Sort By"
+            options={SORT_OPTIONS}
+            value={sort}
+            onChange={handleSortChange}
+            width="140px"
+          />
+          <FilterSelect
+            label="Genre"
+            options={['All', ...genres]}
+            value={genre}
+            onChange={handleGenreChange}
+          />
+          <SortOrderToggle order={order} onToggle={toggleOrder} />
+        </div>
       </div>
       <Separator />
       <div className="flex-grow overflow-y-auto mt-4">

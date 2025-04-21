@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/pagination";
 
 export const PaginationControls = ({ pages, currentPage, goTo }) => (
-    <Pagination>
+    <Pagination className="mt-2 md:mt-0">
         <PaginationContent>
             <PaginationPrevious onClick={() => goTo(currentPage - 1)} />
             {pages.map((itm, idx) => (

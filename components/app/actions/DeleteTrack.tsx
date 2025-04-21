@@ -35,7 +35,6 @@ export const DeleteTrack = ({ trackId, trackTitle }: DeleteTrackProps) => {
                 <Button
                     variant="destructive"
                     size="icon"
-                    aria-label="Delete track"
                 >
                     <Trash2Icon size={16} />
                 </Button>

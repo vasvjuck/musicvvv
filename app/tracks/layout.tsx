@@ -13,7 +13,7 @@ export default function MusicLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="h-screen bg-background grid lg:grid-cols-5">
+        <div className="h-screen bg-background grid grid-cols-1 lg:grid-cols-5">
             <Sheet>
                 <SheetTrigger asChild>
                     <Button
@@ -30,19 +30,16 @@ export default function MusicLayout({
                     <Sidebar className="pb-0" />
                 </SheetContent>
             </Sheet>
-            <aside className="hidden lg:block">
+            <aside className="hidden lg:block lg:col-span-1 border-r">
                 <Sidebar />
             </aside>
-            <main className="col-span-5 lg:col-span-4 lg:border-l flex flex-col">
+            <main className="col-span-1 lg:col-span-4 flex flex-col">
                 <div className="px-4 py-6 lg:px-8">
                     <div className="flex items-center justify-between mb-6">
                         <Tabs defaultValue="music">
                             <TabsList>
                                 <TabsTrigger value="music">Music</TabsTrigger>
-                                <TabsTrigger
-                                    value="podcasts"
-                                    disabled
-                                >
+                                <TabsTrigger value="podcasts" disabled>
                                     Podcasts
                                 </TabsTrigger>
                             </TabsList>
