@@ -6,13 +6,13 @@ import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader,
 import { toast } from "sonner";
 import { useDeleteTrack } from "@/hooks/api/useTracks";
 
-interface DeleteTrackButtonProps {
+interface DeleteTrackProps {
     trackId: string;
     trackTitle: string;
 }
 
-export const DeleteTrackButton = ({ trackId, trackTitle }: DeleteTrackButtonProps) => {
-    const { mutate: deleteTrack, isLoading: isDeleting } = useDeleteTrack();
+export const DeleteTrack = ({ trackId, trackTitle }: DeleteTrackProps) => {
+    const { mutate: deleteTrack } = useDeleteTrack();
 
     const handleConfirm = () => {
         deleteTrack(trackId, {
@@ -36,9 +36,8 @@ export const DeleteTrackButton = ({ trackId, trackTitle }: DeleteTrackButtonProp
                     variant="destructive"
                     size="icon"
                     aria-label="Delete track"
-                    disabled={isDeleting}
                 >
-                    <Trash2Icon className="h-4 w-4" />
+                    <Trash2Icon size={16} />
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -50,7 +49,7 @@ export const DeleteTrackButton = ({ trackId, trackTitle }: DeleteTrackButtonProp
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleConfirm} disabled={isDeleting}>
+                    <AlertDialogAction onClick={handleConfirm}>
                         Delete
                     </AlertDialogAction>
                 </AlertDialogFooter>

@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { PlayIcon, EditIcon } from "lucide-react";
+import { PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { components } from "@/lib/api/types";
-import { DeleteTrackButton } from "./actions/DeleteTrack";
+import { DeleteTrack } from "./actions/DeleteTrack";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import { EditTrack } from "./actions/EditTrack";
 
 // todo
 type Track = components["schemas"]["Track"];
@@ -52,14 +53,8 @@ export const Track = ({ track }: TrackProps) => {
                 </div>
                 <div className="flex gap-2">
                     <div className="flex gap-1 items-center md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => console.log("edit")}
-                        >
-                            <EditIcon className="h-4 w-4" />
-                        </Button>
-                        <DeleteTrackButton
+                        <EditTrack track={track} />
+                        <DeleteTrack
                             trackId={track.id}
                             trackTitle={track.title}
                         />

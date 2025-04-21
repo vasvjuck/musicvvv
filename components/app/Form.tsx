@@ -1,5 +1,3 @@
-"use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, useFieldArray } from "react-hook-form"
 import { Badge } from "@/components/ui/badge"
@@ -24,24 +22,32 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { trackSchema } from "@/lib/validations/trackSchema"
+import { trackSchema, TrackInput } from "@/lib/validations/trackSchema"
 import { useGenres } from "@/hooks/api/useGenres"
-import { z } from "zod"
 import Image from "next/image"
 import { isValidUrl } from "@/lib/utils"
 
-export function Form({ onSubmit }: { onSubmit: (values: z.infer<typeof trackSchema>) => void }) {
+interface FormProps {
+    initialValues?: TrackInput
+    submitLabel?: string
+    onSubmit: (values: TrackInput) => void | Promise<void>
+}
+export const Form = ({
+    initialValues = {
+        title: "",
+        artist: "",
+        album: "",
+        genres: [],
+        coverImage: ""
+    },
+    submitLabel = "Submit",
+    onSubmit,
+}: FormProps) => {
     const { data: genres = [] } = useGenres()
 
-    const form = useForm<z.infer<typeof trackSchema>>({
+    const form = useForm<TrackInput>({
         resolver: zodResolver(trackSchema),
-        defaultValues: {
-            title: "",
-            artist: "",
-            album: "",
-            genres: [],
-            coverImage: ""
-        },
+        defaultValues: initialValues,
     })
 
     const { append, remove } = useFieldArray({
@@ -50,8 +56,7 @@ export function Form({ onSubmit }: { onSubmit: (values: z.infer<typeof trackSche
     })
 
     const selectedGenres = form.watch("genres") || []
-    const trackImage = form.watch("coverImage")?.trim();
-
+    const trackImage = form.watch("coverImage")?.trim()
     const previewSrc =
         trackImage && isValidUrl(trackImage)
             ? trackImage
@@ -176,7 +181,7 @@ export function Form({ onSubmit }: { onSubmit: (values: z.infer<typeof trackSche
                         </div>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit">{submitLabel}</Button>
             </form>
         </ShadcnForm>
     )
