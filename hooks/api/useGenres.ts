@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { genresApi } from "@/lib/api/genres";
 
-const KEYS = {
-    genres: () => ["genres"] as const,
+const genresKeys = {
+    all: () => ['genres'] as const,
 };
 
 export function useGenres() {
     return useQuery({
-        queryKey: [...KEYS.genres()],
+        queryKey: [...genresKeys.all()],
         queryFn: () => genresApi.get(),
     });
 }
