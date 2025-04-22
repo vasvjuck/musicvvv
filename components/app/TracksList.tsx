@@ -67,7 +67,7 @@ export const TracksList: React.FC<TracksListProps> = ({
                         data-testid={`track-checkbox-{${id}}`}
                         checked={selectedIds.includes(id)}
                         onCheckedChange={(checked) => onSelect(id, checked as boolean)}
-                        className="absolute z-10 top-2 right-2"
+                        className="absolute z-10 top-2 right-2 shadow-lg"
                     />
                     <TrackCard track={{ id, ...track }} />
                 </div>
