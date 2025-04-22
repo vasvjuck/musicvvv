@@ -13,6 +13,7 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 
 export const SearchInput = ({ value, onChange }) => (
     <Input
+        data-testid="search-input"
         placeholder="Search tracks..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -20,8 +21,9 @@ export const SearchInput = ({ value, onChange }) => (
     />
 );
 
-export const FilterSelect = ({ label, options, value, onChange, width = '160px' }) => (
-    <Select value={value} onValueChange={onChange}>
+export const FilterSelect = ({
+    label, options, value, onChange, width = '160px', testId }) => (
+    <Select value={value} onValueChange={onChange} data-testid={testId}>
         <SelectTrigger className={`w-[${width}]`}>
             <SelectValue placeholder={label} />
         </SelectTrigger>

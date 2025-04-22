@@ -63,12 +63,13 @@ export const Form = ({
             : "/track_placeholder.png"
 
     return (
-        <ShadcnForm {...form}>
+        <ShadcnForm {...form} data-testid="track-form">
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="w-full space-y-3"
             >
                 <FormField
+                    data-testid="input-title"
                     control={form.control}
                     name="title"
                     render={({ field }) => (
@@ -77,11 +78,12 @@ export const Form = ({
                             <FormControl>
                                 <Input placeholder="Track title" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage data-testid="error-title" />
                         </FormItem>
                     )}
                 />
                 <FormField
+                    data-testid="input-artist"
                     control={form.control}
                     name="artist"
                     render={({ field }) => (
@@ -90,11 +92,12 @@ export const Form = ({
                             <FormControl>
                                 <Input placeholder="Artist name" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage data-testid="error-artist" />
                         </FormItem>
                     )}
                 />
                 <FormField
+                    data-testid="input-album"
                     control={form.control}
                     name="album"
                     render={({ field }) => (
@@ -108,6 +111,7 @@ export const Form = ({
                     )}
                 />
                 <FormField
+                    data-testid="genre-selector"
                     control={form.control}
                     name="genres"
                     render={() => (
@@ -152,11 +156,12 @@ export const Form = ({
                                     </PopoverContent>
                                 </Popover>
                             </div>
-                            <FormMessage />
+                            <FormMessage data-testid="error-genre" />
                         </FormItem>
                     )}
                 />
                 <FormField
+                    data-testid="input-cover-image"
                     control={form.control}
                     name="coverImage"
                     render={({ field }) => (
@@ -181,7 +186,9 @@ export const Form = ({
                         </div>
                     )}
                 />
-                <Button type="submit">{submitLabel}</Button>
+                <Button data-testid="submit-button" type="submit">
+                    {submitLabel}
+                </Button>
             </form>
         </ShadcnForm>
     )

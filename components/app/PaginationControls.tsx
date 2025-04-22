@@ -9,9 +9,12 @@ import {
 } from "@/components/ui/pagination";
 
 export const PaginationControls = ({ pages, currentPage, goTo }) => (
-    <Pagination className="mt-2 md:mt-0">
+    <Pagination className="mt-2 md:mt-0" data-testid="pagination">
         <PaginationContent>
-            <PaginationPrevious onClick={() => goTo(currentPage - 1)} />
+            <PaginationPrevious
+                data-testid="pagination-prev"
+                onClick={() => goTo(currentPage - 1)}
+            />
             {pages.map((itm, idx) => (
                 <PaginationItem key={`${itm}-${idx}`}>
                     {itm === 'ellipsis' ? (
@@ -23,7 +26,9 @@ export const PaginationControls = ({ pages, currentPage, goTo }) => (
                     )}
                 </PaginationItem>
             ))}
-            <PaginationNext onClick={() => goTo(currentPage + 1)} />
+            <PaginationNext
+                onClick={() => goTo(currentPage + 1)} data-testid="pagination-next"
+            />
         </PaginationContent>
     </Pagination>
 );

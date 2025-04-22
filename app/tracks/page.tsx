@@ -84,12 +84,14 @@ export default function MusicPage() {
             value={sort}
             onChange={handleSortChange}
             width="140px"
+            testId="sort-select"
           />
           <FilterSelect
             label="Genre"
             options={['All', ...genres]}
             value={genre}
             onChange={handleGenreChange}
+            testId="filter-genre"
           />
           <SortOrderToggle order={order} onToggle={toggleOrder} />
         </div>

@@ -62,10 +62,11 @@ export const TracksList: React.FC<TracksListProps> = ({
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 pb-6 px-2">
             {tracks.map(({ id, ...track }) => (
                 <div key={id} className="relative">
                     <Checkbox
+                        data-testid={`track-checkbox-{${id}}`}
                         checked={selectedIds.includes(id)}
                         onCheckedChange={(checked) => onSelect(id, checked as boolean)}
                         className="absolute z-10 top-2 left-2"

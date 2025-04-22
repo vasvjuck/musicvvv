@@ -56,6 +56,7 @@ export const BulkActions: React.FC<BulkActionsProps> = ({
                         <CardContent className="flex items-center justify-between ">
                             <div className="flex items-center space-x-2">
                                 <Checkbox
+                                    data-testid="select-all"
                                     checked={isAllSelected}
                                     onCheckedChange={(checked) => onSelectAll(checked as boolean)}
                                 />
@@ -66,7 +67,10 @@ export const BulkActions: React.FC<BulkActionsProps> = ({
 
                             <AlertDialog>
                                 <AlertDialogTrigger asChild>
-                                    <Button variant="destructive" size="sm">
+                                    <Button
+                                        data-testid="bulk-delete-button" variant="destructive"
+                                        size="sm"
+                                    >
                                         <Trash2 className="mr-1" size={16} /> Delete Selected ({selectedCount})
                                     </Button>
                                 </AlertDialogTrigger>

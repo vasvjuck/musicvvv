@@ -41,7 +41,7 @@ export const CreateTrack = () => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>
+                <Button data-testid="create-track-button">
                     <PlusCircle className="mr-2 h-4 w-4" />
                     Create Track
                 </Button>
@@ -55,6 +55,6 @@ export const CreateTrack = () => {
                 </DialogHeader>
                 <Form onSubmit={onSubmit} />
             </DialogContent>
-        </Dialog>
+        </Dialog >
     );
 }
