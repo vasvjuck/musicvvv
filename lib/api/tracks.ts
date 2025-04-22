@@ -1,8 +1,5 @@
 import { api } from "./client";
-import {
-    components,
-    paths,
-} from "./types";
+import { components, paths } from "./types";
 
 type Track = components["schemas"]["Track"];
 type TrackList = paths["/api/tracks"]["get"]["responses"]["200"]["content"]["application/json"];
@@ -34,8 +31,9 @@ export const tracksApi = {
     update: (id: string, payload: Partial<Omit<Track, "id" | "slug">>) =>
         api.put<Track>(`/api/tracks/${id}`, payload).then(res => res.data),
 
-    delete: (id: string) =>
-        api.delete<void>(`/api/tracks/${id}`),
+    delete: (id: string) => api.delete<void>(`/api/tracks/${id}`),
+
+    deleteAll: (ids: string[]) => api.post<void>(`/api/tracks/delete`, { ids }),
 
     uploadFile: async (id: string, file: File) => {
         const formData = new FormData();

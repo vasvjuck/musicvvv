@@ -49,3 +49,11 @@ export function useDeleteTrack() {
         onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.tracks() }),
     });
 }
+
+export const useDeleteTracks = () => {
+    const qc = useQueryClient();
+    return useMutation({
+        mutationFn: (ids: string[]) => tracksApi.deleteAll(ids),
+        onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.tracks() }),
+    });
+}

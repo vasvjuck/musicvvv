@@ -20,7 +20,7 @@ export const CreateTrack = () => {
 
     const createTrack = useCreateTrack();
 
-    const onSubmit = async (values) => {
+    const onSubmit = async values => {
         try {
             await createTrack.mutateAsync(values);
             toast.success("New track added", {
