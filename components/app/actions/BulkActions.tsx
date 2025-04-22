@@ -25,7 +25,7 @@ interface BulkActionsProps {
 const containerVariants = {
     hidden: { height: 0, opacity: 0 },
     visible: {
-        height: '60px',
+        height: '11vh',
         opacity: 1,
         transition: { type: 'spring', stiffness: 450, damping: 40 },
     },

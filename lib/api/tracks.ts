@@ -1,7 +1,7 @@
 import { api } from "./client";
-import { components, paths } from "./types";
+import { paths } from "./types";
+import { Track } from '@/schema';
 
-type Track = components["schemas"]["Track"];
 type TrackList = paths["/api/tracks"]["get"]["responses"]["200"]["content"]["application/json"];
 
 export const tracksApi = {

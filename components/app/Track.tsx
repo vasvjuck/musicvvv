@@ -1,21 +1,19 @@
-import Image from "next/image";
+import
+Image from "next/image";
 import { PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { components } from "@/lib/api/types";
 import { DeleteTrack } from "./actions/DeleteTrack";
 import { useEffect, useRef, useState } from "react";
-import clsx from "clsx";
 import { EditTrack } from "./actions/EditTrack";
 import { UploadTrackFile } from "./actions/UploadTrackFile";
 import { registerAndToggle } from "@/lib/common/audioManager";
-
-type Track = components["schemas"]["Track"];
-
+import { cn } from "@/lib/utils";
+import { Track } from '@/schema'
 interface TrackProps extends React.HTMLAttributes<HTMLDivElement> {
     track: Track;
 }
 
-export const Track = ({ track }: TrackProps) => {
+export const TrackCard = ({ track }: TrackProps) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -29,7 +27,6 @@ export const Track = ({ track }: TrackProps) => {
     useEffect(() => {
         const audioEl = audioRef.current;
         if (!audioEl) return;
-
         if (isPlaying) {
             audioEl.play();
         } else {
@@ -41,14 +38,40 @@ export const Track = ({ track }: TrackProps) => {
         <div className="group relative flex flex-col justify-between gap-4 p-4 bg-card rounded-2xl shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4 justify-between w-full">
                 <div className="flex-shrink-0">
-                    <div className="aspect-square w-16 overflow-hidden rounded-lg bg-muted">
+                    <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
                         <Image
                             src={track?.coverImage || '/track_placeholder.png'}
                             alt={track.title}
-                            width={64}
-                            height={64}
-                            className="object-cover w-full h-full"
+                            width={72}
+                            height={72}
+                            className={cn("object-cover",
+                                track.audioFile && "blur-xs")}
                         />
+                        {track.audioFile && (
+                            <Button
+                                variant="link"
+                                size="icon"
+                                onClick={toggleAudio}
+                                className="absolute inset-0 m-auto flex items-center justify-center gap-0.5 bg-secondary rounded-full"
+                            >
+                                <audio
+                                    ref={audioRef}
+                                    className="hidden"
+                                    src={audioUrl}
+                                />
+                                {isPlaying ? (
+                                    [1, 2, 3, 4].map(bar => (
+                                        <div
+                                            key={bar}
+                                            className="indicator-line active"
+                                            style={{ animationDelay: `${bar * 0.1}s` }}
+                                        />
+                                    ))
+                                ) : (
+                                    <PlayIcon size={16} />
+                                )}
+                            </Button>
+                        )}
                     </div>
                 </div>
                 <div className="flex-grow">
@@ -64,24 +87,6 @@ export const Track = ({ track }: TrackProps) => {
                             trackTitle={track.title}
                         />
                     </div>
-                    {track.audioFile && (
-                        <Button variant="outline" size="icon" onClick={toggleAudio} className="gap-0.5">
-                            <audio ref={audioRef} className="hidden" src={audioUrl} />
-                            {isPlaying ? (
-                                <>
-                                    {[1, 2, 3, 4].map(bar => (
-                                        <div
-                                            key={bar}
-                                            className={clsx("indicator-line active")}
-                                            style={{ animationDelay: `${bar * 0.1}s` }}
-                                        />
-                                    ))}
-                                </>
-                            ) : (
-                                <PlayIcon size={16} />
-                            )}
-                        </Button>
-                    )}
                 </div>
             </div>
         </div>

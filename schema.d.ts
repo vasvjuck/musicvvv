@@ -11,6 +11,7 @@ export interface Track extends TrackInput {
     slug: string;
     createdAt: string;
     updatedAt: string;
+    audioFile?: string;
 }
 
 export interface TrackParams {

@@ -1,11 +1,9 @@
 import React from 'react';
-import { Track as TrackCard } from './Track';
+import { TrackCard } from '@/components/app/Track';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Music2 } from 'lucide-react';
-import Link from 'next/link';
 import type { components } from '@/lib/api/types';
 
 type Track = components['schemas']['Track'];
@@ -38,7 +36,7 @@ export const TracksList: React.FC<TracksListProps> = ({
                                 <Skeleton className="h-3 w-1/2 rounded-md" />
                             </div>
                         </div>
-                        <Skeleton className="w-8 h-8 rounded-full absolute bottom-2 right-2" />
+                        <Skeleton className="w-8 h-8 rounded-lg absolute bottom-2 right-2" />
                     </div>
                 ))}
             </div>
@@ -69,7 +67,7 @@ export const TracksList: React.FC<TracksListProps> = ({
                         data-testid={`track-checkbox-{${id}}`}
                         checked={selectedIds.includes(id)}
                         onCheckedChange={(checked) => onSelect(id, checked as boolean)}
-                        className="absolute z-10 top-2 left-2"
+                        className="absolute z-10 top-2 right-2"
                     />
                     <TrackCard track={{ id, ...track }} />
                 </div>
