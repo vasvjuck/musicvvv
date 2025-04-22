@@ -1,3 +1,4 @@
+import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +12,12 @@ import {
 } from "@/components/ui/select";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
-export const SearchInput = ({ value, onChange }) => (
+interface SearchInputProps {
+    value: string;
+    onChange: (value: string) => void;
+}
+
+export const SearchInput: React.FC<SearchInputProps> = ({ value, onChange }) => (
     <Input
         data-testid="search-input"
         placeholder="Search tracks..."
@@ -21,8 +27,25 @@ export const SearchInput = ({ value, onChange }) => (
     />
 );
 
-export const FilterSelect = ({
-    label, options, value, onChange, width = '160px', testId }) => (
+type FilterOption = string | { value: string; label: string };
+
+interface FilterSelectProps {
+    label: string;
+    options: FilterOption[];
+    value: string;
+    onChange: (value: string) => void;
+    width?: string;
+    testId?: string;
+}
+
+export const FilterSelect: React.FC<FilterSelectProps> = ({
+    label,
+    options,
+    value,
+    onChange,
+    width = '160px',
+    testId,
+}) => (
     <Select value={value} onValueChange={onChange} data-testid={testId}>
         <SelectTrigger className={`w-[${width}]`}>
             <SelectValue placeholder={label} />
@@ -30,21 +53,33 @@ export const FilterSelect = ({
         <SelectContent>
             <SelectGroup>
                 <SelectLabel>{label}</SelectLabel>
-                {options.map(option => (
-                    <SelectItem
-                        key={option.value || option}
-                        value={option.value || option}
-                    >
-                        {option.label || option}
-                    </SelectItem>
-                ))}
+                {options.map((option) => {
+                    const val = typeof option === 'string' ? option : option.value;
+                    const labelText =
+                        typeof option === 'string' ? option : option.label;
+                    return (
+                        <SelectItem key={val} value={val}>
+                            {labelText}
+                        </SelectItem>
+                    );
+                })}
             </SelectGroup>
         </SelectContent>
     </Select>
 );
 
-export const SortOrderToggle = ({ order, onToggle }) => (
-    <Button variant="outline" size="icon" onClick={onToggle} className="ml-auto">
+interface SortOrderToggleProps {
+    order: 'asc' | 'desc';
+    onToggle: () => void;
+}
+
+export const SortOrderToggle: React.FC<SortOrderToggleProps> = ({ order, onToggle }) => (
+    <Button
+        variant="outline"
+        size="icon"
+        onClick={onToggle}
+        className="ml-auto"
+    >
         {order === 'asc' ? <ArrowUp /> : <ArrowDown />}
     </Button>
 );

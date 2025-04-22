@@ -4,10 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Music2 } from 'lucide-react';
-import type { components } from '@/lib/api/types';
-
-type Track = components['schemas']['Track'];
-
+import { Track } from '@/schema'
 interface TracksListProps {
     tracks: Track[];
     isLoading: boolean;
@@ -21,7 +18,8 @@ export const TracksList: React.FC<TracksListProps> = ({
     selectedIds,
     onSelect,
 }) => {
-    if (isLoading) {
+
+    if (isLoading)
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 pb-6">
                 {Array.from({ length: 8 }).map((_, idx) => (
@@ -41,9 +39,8 @@ export const TracksList: React.FC<TracksListProps> = ({
                 ))}
             </div>
         );
-    }
 
-    if (!tracks.length) {
+    if (!tracks.length)
         return (
             <Card className="max-w-md mx-auto mt-12 p-6">
                 <CardHeader className="space-y-2">
@@ -57,10 +54,11 @@ export const TracksList: React.FC<TracksListProps> = ({
                 </CardContent>
             </Card>
         );
-    }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 pb-6 px-2">
+        <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 pb-6 px-2"
+        >
             {tracks.map(({ id, ...track }) => (
                 <div key={id} className="relative">
                     <Checkbox

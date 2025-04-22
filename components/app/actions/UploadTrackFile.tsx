@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
 import { Upload, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,7 +49,7 @@ export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
         handleSubmit,
         reset,
         watch,
-        formState: { errors, isSubmitting },
+        formState: { isSubmitting },
     } = form;
 
     const selectedFile = watch("file");

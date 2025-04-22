@@ -10,7 +10,6 @@ import {
     CommandItem,
 } from "@/components/ui/command"
 import { Plus, X } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import {
     Form as ShadcnForm,
@@ -22,7 +21,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { trackSchema, TrackInput } from "@/lib/validations/trackSchema"
+import { trackSchema } from "@/lib/validations/trackSchema"
+import { TrackInput } from '@/schema'
 import { useGenres } from "@/hooks/api/useGenres"
 import Image from "next/image"
 import { isValidUrl } from "@/lib/utils"

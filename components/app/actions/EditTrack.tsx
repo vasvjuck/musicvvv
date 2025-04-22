@@ -10,16 +10,16 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/app/Form";
 import { toast } from "sonner";
 import { useUpdateTrack } from "@/hooks/api/useTracks";
-
+import { Track, TrackInput } from '@/schema'
 interface EditTrackProps {
-    track: any;
+    track: Track;
 }
 
 export const EditTrack = ({ track }: EditTrackProps) => {
     const [open, setOpen] = useState(false);
     const updateTrack = useUpdateTrack();
 
-    const onSubmit = async values => {
+    const onSubmit = async (values: TrackInput) => {
         try {
             await updateTrack.mutateAsync({ ...values, id: track.id });
             toast.success(`"${values.title}" updated.`);

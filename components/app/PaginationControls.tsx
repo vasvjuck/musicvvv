@@ -8,7 +8,14 @@ import {
     PaginationEllipsis,
 } from "@/components/ui/pagination";
 
-export const PaginationControls = ({ pages, currentPage, goTo }) => (
+interface PaginationControlsProps {
+    pages: number[] | string[];
+    currentPage: number;
+    goTo: (_el: string | number) => void;
+}
+
+export const PaginationControls = (
+    { pages, currentPage, goTo }: PaginationControlsProps) => (
     <Pagination className="mt-2 md:mt-0" data-testid="pagination">
         <PaginationContent>
             <PaginationPrevious
@@ -20,7 +27,10 @@ export const PaginationControls = ({ pages, currentPage, goTo }) => (
                     {itm === 'ellipsis' ? (
                         <PaginationEllipsis />
                     ) : (
-                        <PaginationLink onClick={() => goTo(itm)} isActive={itm === currentPage}>
+                        <PaginationLink
+                            onClick={() => goTo(itm)}
+                            isActive={itm === currentPage}
+                        >
                             {itm}
                         </PaginationLink>
                     )}

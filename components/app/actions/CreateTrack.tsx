@@ -14,13 +14,13 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/app/Form";
 import { toast } from "sonner";
 import { useCreateTrack } from "@/hooks/api/useTracks";
-
+import { TrackInput } from '@/schema'
 export const CreateTrack = () => {
     const [open, setOpen] = useState(false);
 
     const createTrack = useCreateTrack();
 
-    const onSubmit = async values => {
+    const onSubmit = async (values: TrackInput) => {
         try {
             await createTrack.mutateAsync(values);
             toast.success("New track added", {
