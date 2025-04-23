@@ -21,9 +21,9 @@ export const EditTrack = ({ track }: EditTrackProps) => {
 
     const onSubmit = async (values: TrackInput) => {
         try {
+            setOpen(false);
             await updateTrack.mutateAsync({ ...values, id: track.id });
             toast.success(`"${values.title}" updated.`);
-            setOpen(false);
         } catch (err) {
             const message =
                 err instanceof Error

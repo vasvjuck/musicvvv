@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrackCard } from '@/components/app/Track';
+import { TrackCard } from '@/components/app/TrackCard';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';

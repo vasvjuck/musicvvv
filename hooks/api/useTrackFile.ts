@@ -14,10 +14,8 @@ export const useUploadTrackFile = (
     const queryClient = useQueryClient();
     return useMutation<Track, ApiError, FileInput>({
         mutationFn: (file) => tracksApi.uploadFile(trackId, file),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: trackKeys.detail(trackId) });
-            queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
-        },
+        onSuccess: () =>
+            queryClient.invalidateQueries({ queryKey: trackKeys.lists() }),
         ...options,
     });
 }
@@ -29,10 +27,8 @@ export const useRemoveTrackFile = (
     const queryClient = useQueryClient();
     return useMutation<Track, ApiError, void>({
         mutationFn: () => tracksApi.deleteFile(trackId),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: trackKeys.detail(trackId) });
-            queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
-        },
+        onSuccess: () =>
+            queryClient.invalidateQueries({ queryKey: trackKeys.lists() }),
         ...options,
     });
 }

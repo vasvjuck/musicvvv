@@ -16,9 +16,6 @@ export const tracksApi = {
     }) =>
         api.get<TrackList>("/api/tracks", { params }).then(res => res.data),
 
-    getBySlug: (slug: string) =>
-        api.get<Track>("/api/tracks/" + slug).then(res => res.data),
-
     create: (payload: {
         title: string;
         artist: string;

@@ -13,6 +13,7 @@ import {
     AlertDialogDescription,
     AlertDialogCancel,
     AlertDialogAction,
+    AlertDialogFooter
 } from '@/components/ui/alert-dialog';
 
 interface BulkActionsProps {
@@ -81,10 +82,12 @@ export const BulkActions: React.FC<BulkActionsProps> = ({
                                             Are you sure you want to delete {selectedCount} tracks? This action cannot be undone.
                                         </AlertDialogDescription>
                                     </AlertDialogHeader>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction onClick={onDelete}>
-                                        Delete
-                                    </AlertDialogAction>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction onClick={onDelete}>
+                                            Delete
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
                                 </AlertDialogContent>
                             </AlertDialog>
                         </CardContent>

@@ -11,6 +11,7 @@ import type {
     TrackParams,
     TrackInput,
     ApiError,
+    Meta,
 } from '@/schema';
 
 export const trackKeys = {
@@ -18,33 +19,26 @@ export const trackKeys = {
     lists: () => [...trackKeys.all, 'list'] as const,
     list: (params?: TrackParams) =>
         [...trackKeys.lists(), params ?? {}] as const,
-    detail: (identifier: string) =>
-        [...trackKeys.all, 'detail', identifier] as const,
 };
 
-export type MutationConfig<TData, TVariables> = Omit<
-    UseMutationOptions<TData, ApiError, TVariables>,
+export type MutationConfig<
+    TData,
+    TVariables,
+    TContext = unknown
+> = Omit<
+    UseMutationOptions<TData, ApiError, TVariables, TContext>,
     'mutationFn'
 >;
 
+type TrackList = { data: Track[]; meta: Meta };
+
 export const useTracks = (
     params?: TrackParams,
-    options?: UseQueryOptions<Track[], ApiError>
+    options?: UseQueryOptions<TrackList, ApiError>
 ) => {
-    return useQuery<Track[], ApiError>({
+    return useQuery<TrackList, ApiError>({
         queryKey: trackKeys.list(params),
         queryFn: () => tracksApi.get(params),
-        ...options,
-    });
-};
-
-export const useTrack = (
-    identifier: string,
-    options?: UseQueryOptions<Track, ApiError>
-) => {
-    return useQuery<Track, ApiError>({
-        queryKey: trackKeys.detail(identifier),
-        queryFn: () => tracksApi.getBySlug(identifier),
         ...options,
     });
 };
@@ -55,53 +49,60 @@ export const useCreateTrack = (
     const queryClient = useQueryClient();
     return useMutation<Track, ApiError, TrackInput>({
         mutationFn: (newTrack) => tracksApi.create(newTrack),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
-        },
+        onSuccess: () =>
+            queryClient.invalidateQueries({ queryKey: trackKeys.lists() }),
         ...options,
     });
 };
 
 export const useUpdateTrack = (
-    options?: MutationConfig<Track, { id: string } & Partial<TrackInput>>
+    options?: MutationConfig<
+        Track,
+        { id: string } & Partial<TrackInput>,
+        { previousList?: TrackList }
+    >
 ) => {
     const queryClient = useQueryClient();
-    return useMutation<Track, ApiError, { id: string } & Partial<TrackInput>>({
-        mutationFn: ({ id, ...data }) => tracksApi.update(id, data),
-        onMutate: async (variables) => {
-            const { id, ...newData } = variables;
-            await queryClient.cancelQueries({ queryKey: trackKeys.lists() });
-            await queryClient.cancelQueries({ queryKey: trackKeys.detail(id) });
+    const allQueries = queryClient.getQueryCache().findAll();
+    const listQuery = allQueries.find(
+        (q) =>
+            Array.isArray(q.queryKey) &&
+            q.queryKey[0] === 'tracks' &&
+            q.queryKey[1] === 'list'
+    );
+    const params = (listQuery?.queryKey[2] as TrackParams) || undefined;
+    const key = trackKeys.list(params);
 
-            const previousList = queryClient.getQueryData<Track[]>(trackKeys.lists());
-            const previousDetail = queryClient.getQueryData<Track>(trackKeys.detail(id));
+    return useMutation<
+        Track,
+        ApiError,
+        { id: string } & Partial<TrackInput>,
+        { previousList?: TrackList }
+    >({
+        mutationFn: ({ id, ...data }) => tracksApi.update(id, data),
+        onMutate: async ({ id, ...newData }) => {
+            await queryClient.cancelQueries({ queryKey: key });
+
+            const previousList = queryClient.getQueryData<TrackList>(key);
 
             if (previousList) {
-                queryClient.setQueryData<Track[]>(trackKeys.lists(), (old = []) =>
-                    old.map((t) => (t.id === id ? { ...t, ...newData } : t))
-                );
-            }
-            if (previousDetail) {
-                queryClient.setQueryData<Track>(trackKeys.detail(id), {
-                    ...previousDetail,
-                    ...newData,
-                });
+                queryClient.setQueryData<TrackList>(key, (old) => ({
+                    data: old?.data.map((t) =>
+                        t.id === id ? { ...t, ...newData } : t
+                    ) ?? [],
+                    meta: previousList.meta,
+                }));
             }
 
-            return { previousList, previousDetail };
+            return { previousList };
         },
-        onError: (_err, variables, context) => {
+        onError: (_err, _vars, context) => {
             if (context?.previousList) {
-                queryClient.setQueryData(trackKeys.lists(), context.previousList);
-            }
-            if (context?.previousDetail) {
-                queryClient.setQueryData(trackKeys.detail(variables.id), context.previousDetail);
+                queryClient.setQueryData<TrackList>(key, context.previousList);
             }
         },
-        onSettled: (_data, _error, variables) => {
-            queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
-            queryClient.invalidateQueries({ queryKey: trackKeys.detail(variables.id) });
-        },
+        onSettled: () =>
+            queryClient.invalidateQueries({ queryKey: key }),
         ...options,
     });
 };
@@ -112,10 +113,8 @@ export const useDeleteTrack = (
     const queryClient = useQueryClient();
     return useMutation<void, ApiError, string>({
         mutationFn: (id) => tracksApi.delete(id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
-            queryClient.removeQueries({ queryKey: trackKeys.detail(id) });
-        },
+        onSuccess: () =>
+            queryClient.invalidateQueries({ queryKey: trackKeys.lists() }),
         ...options,
     });
 };
@@ -126,9 +125,8 @@ export const useDeleteTracks = (
     const queryClient = useQueryClient();
     return useMutation<void, ApiError, string[]>({
         mutationFn: (ids) => tracksApi.deleteAll(ids),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
-        },
+        onSuccess: () =>
+            queryClient.invalidateQueries({ queryKey: trackKeys.lists() }),
         ...options,
     });
 };
