@@ -35,11 +35,12 @@ export const DeleteTrack = ({ trackId, trackTitle }: DeleteTrackProps) => {
                 <Button
                     variant="destructive"
                     size="icon"
+                    data-testid={`delete-track-${trackId}`}
                 >
                     <Trash2Icon size={16} />
                 </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent data-testid="confirm-dialog">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete track?</AlertDialogTitle>
                     <AlertDialogDescription>
@@ -47,8 +48,13 @@ export const DeleteTrack = ({ trackId, trackTitle }: DeleteTrackProps) => {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleConfirm}>
+                    <AlertDialogCancel data-testid="cancel-delete">
+                        Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                        onClick={handleConfirm}
+                        data-testid="confirm-delete"
+                    >
                         Delete
                     </AlertDialogAction>
                 </AlertDialogFooter>

@@ -75,7 +75,9 @@ export const BulkActions: React.FC<BulkActionsProps> = ({
                                         <Trash2 className="mr-1" size={16} /> Delete Selected ({selectedCount})
                                     </Button>
                                 </AlertDialogTrigger>
-                                <AlertDialogContent>
+                                <AlertDialogContent
+                                    data-testid="confirm-dialog"
+                                >
                                     <AlertDialogHeader>
                                         <AlertDialogTitle>Delete Tracks</AlertDialogTitle>
                                         <AlertDialogDescription>
@@ -83,8 +85,15 @@ export const BulkActions: React.FC<BulkActionsProps> = ({
                                         </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                        <AlertDialogAction onClick={onDelete}>
+                                        <AlertDialogCancel
+                                            data-testid="cancel-delete"
+                                        >
+                                            Cancel
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction
+                                            onClick={onDelete}
+                                            data-testid="confirm-delete"
+                                        >
                                             Delete
                                         </AlertDialogAction>
                                     </AlertDialogFooter>

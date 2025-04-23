@@ -38,7 +38,10 @@ export const EditTrack = ({ track }: EditTrackProps) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">
+                <Button
+                    variant="outline"
+                    data-testid={`edit-track-${track?.id}`}
+                >
                     <Edit size={16} />
                 </Button>
             </DialogTrigger>

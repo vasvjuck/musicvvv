@@ -92,7 +92,10 @@ export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
         <>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button variant="outline">
+                    <Button
+                        variant="outline"
+                        data-testid={`upload-track-${track?.id}`}
+                    >
                         <Upload size={16} />
                     </Button>
                 </DialogTrigger>
