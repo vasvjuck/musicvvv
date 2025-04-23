@@ -113,6 +113,7 @@ export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
                                             control={control}
                                             render={({ field }) => (
                                                 <Input
+                                                    className="cursor-pointer"
                                                     type="file"
                                                     accept=".mp3, .mp4, .wav"
                                                     onChange={(e) => field.onChange(e.target.files?.[0])}
@@ -140,14 +141,13 @@ export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
                             </form>
                         </ShadcnForm>
                     ) : (
-                        <div className="flex items-center space-x-4">
+                        <div className="flex flex-col items-center gap-4">
                             <audio
                                 onPlay={toggleAudioPreview}
                                 onPause={() => setIsPlaying(false)}
                                 ref={audioRef}
                                 controls
                                 src={audioUrl}
-                                className="flex-1"
                             />
                             <Button
                                 variant="destructive"

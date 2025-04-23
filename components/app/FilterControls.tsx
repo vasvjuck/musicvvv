@@ -47,11 +47,11 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
     width = '160px',
     testId,
 }) => (
-    <Select value={value} onValueChange={onChange} data-testid={testId}>
+    <Select value={value} onValueChange={onChange} data-testid={testId} >
         <SelectTrigger className={`w-[${width}]`}>
             <SelectValue placeholder={label} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className='max-h-[300px] overflow-scroll'>
             <SelectGroup>
                 <SelectLabel>{label}</SelectLabel>
                 {options.map((option) => {

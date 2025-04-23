@@ -26,6 +26,7 @@ import { TrackInput } from '@/schema'
 import { useGenres } from "@/hooks/api/useGenres"
 import Image from "next/image"
 import { isValidUrl } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface FormProps {
     initialValues?: TrackInput
@@ -141,16 +142,18 @@ export const Form = ({
                                                 No genres found.
                                             </CommandEmpty>
                                             <CommandGroup>
-                                                {genres
-                                                    .filter((g) => !selectedGenres.includes(g))
-                                                    .map((genreValue) => (
-                                                        <CommandItem
-                                                            key={genreValue}
-                                                            onSelect={() => append(genreValue)}
-                                                        >
-                                                            {genreValue}
-                                                        </CommandItem>
-                                                    ))}
+                                                <ScrollArea className="h-42">
+                                                    {genres
+                                                        .filter((g) => !selectedGenres.includes(g))
+                                                        .map((genreValue) => (
+                                                            <CommandItem
+                                                                key={genreValue}
+                                                                onSelect={() => append(genreValue)}
+                                                            >
+                                                                {genreValue}
+                                                            </CommandItem>
+                                                        ))}
+                                                </ScrollArea>
                                             </CommandGroup>
                                         </Command>
                                     </PopoverContent>
