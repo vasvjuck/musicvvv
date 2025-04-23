@@ -6,8 +6,8 @@ export const usePagination = (
     setPage: (number: number) => void
 ) => {
     const goTo = useCallback(
-        (page: number) => {
-            const next = Math.max(1, Math.min(totalPages, page));
+        (page: number | string) => {
+            const next = Math.max(1, Math.min(totalPages, page as number));
             setPage(next);
         },
         [totalPages, setPage]

@@ -17,15 +17,16 @@ interface SearchInputProps {
     onChange: (value: string) => void;
 }
 
-export const SearchInput: React.FC<SearchInputProps> = ({ value, onChange }) => (
-    <Input
-        data-testid="search-input"
-        placeholder="Search tracks..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="min-w-[200px]"
-    />
-);
+export const SearchInput: React.FC<SearchInputProps> =
+    ({ value, onChange }) => (
+        <Input
+            data-testid="search-input"
+            placeholder="Search tracks..."
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="min-w-[200px]"
+        />
+    );
 
 type FilterOption = string | { value: string; label: string };
 
@@ -73,13 +74,14 @@ interface SortOrderToggleProps {
     onToggle: () => void;
 }
 
-export const SortOrderToggle: React.FC<SortOrderToggleProps> = ({ order, onToggle }) => (
-    <Button
-        variant="outline"
-        size="icon"
-        onClick={onToggle}
-        className="ml-auto"
-    >
-        {order === 'asc' ? <ArrowUp /> : <ArrowDown />}
-    </Button>
-);
+export const SortOrderToggle: React.FC<SortOrderToggleProps> =
+    ({ order, onToggle }) => (
+        <Button
+            variant="outline"
+            size="icon"
+            onClick={onToggle}
+            className="ml-auto"
+        >
+            {order === 'asc' ? <ArrowUp /> : <ArrowDown />}
+        </Button>
+    );

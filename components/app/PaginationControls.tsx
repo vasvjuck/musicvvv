@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/pagination";
 
 interface PaginationControlsProps {
-    pages: number[] | string[];
+    pages: (string | number)[];
     currentPage: number;
-    goTo: (_el: string | number) => void;
+    goTo: (page: number | string) => void;
 }
 
 export const PaginationControls = (

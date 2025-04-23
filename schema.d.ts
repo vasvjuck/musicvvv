@@ -19,6 +19,8 @@ export interface TrackParams {
     limit?: number;
     search?: string;
     genre?: string;
+    sort?: string;
+    order: 'asc' | 'desc'
 }
 
 export interface ApiError {
