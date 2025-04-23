@@ -25,9 +25,10 @@ import { toast } from "sonner";
 import { useUploadTrackFile, useRemoveTrackFile } from "@/hooks/api/useTrackFile";
 import { registerAndToggle } from "@/lib/common/audioManager";
 import { FileInput, fileSchema } from "@/lib/validations/trackFileSchema";
+import { Track } from "@/schema";
 
 interface UploadTrackFileProps {
-    track: any;
+    track: Track;
 }
 
 export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
@@ -41,7 +42,7 @@ export const UploadTrackFile: React.FC<UploadTrackFileProps> = ({ track }) => {
 
     const form = useForm<FileInput>({
         resolver: zodResolver(fileSchema),
-        defaultValues: { file: undefined as any },
+        defaultValues: { file: undefined },
     });
 
     const {

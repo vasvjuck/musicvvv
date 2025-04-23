@@ -1,36 +1,51 @@
 import { api } from "./client";
 import { paths } from "./types";
 import { Track } from '@/schema';
-
 type TrackList = paths["/api/tracks"]["get"]["responses"]["200"]["content"]["application/json"];
 
+export interface TrackQueryParams {
+    page?: number;
+    limit?: number;
+    sort?: string;
+    order?: string;
+    search?: string;
+    genre?: string;
+    artist?: string;
+}
+
+export interface TrackPayload {
+    title: string;
+    artist: string;
+    album?: string;
+    genres: string[];
+    coverImage?: string;
+}
+
+const BASE_URL = '/api/tracks';
+
 export const tracksApi = {
-    get: (params?: {
-        page?: number;
-        limit?: number;
-        sort?: string;
-        order?: string;
-        search?: string;
-        genre?: string;
-        artist?: string;
-    }) =>
-        api.get<TrackList>("/api/tracks", { params }).then(res => res.data),
+    get: async (params: TrackQueryParams = {}): Promise<TrackList> => {
+        const { data } = await api.get<TrackList>(BASE_URL, { params });
+        return data;
+    },
 
-    create: (payload: {
-        title: string;
-        artist: string;
-        album?: string;
-        genres: string[];
-        coverImage?: string;
-    }) =>
-        api.post<Track>("/api/tracks", payload).then(res => res.data),
+    create: async (payload: TrackPayload): Promise<Track> => {
+        const { data } = await api.post<Track>(BASE_URL, payload);
+        return data;
+    },
 
-    update: (id: string, payload: Partial<Omit<Track, "id" | "slug">>) =>
-        api.put<Track>(`/api/tracks/${id}`, payload).then(res => res.data),
+    update: async (id: string, payload: Partial<Omit<Track, 'id'>>): Promise<Track> => {
+        const { data } = await api.put<Track>(`${BASE_URL}/${id}`, payload);
+        return data;
+    },
 
-    delete: (id: string) => api.delete<void>(`/api/tracks/${id}`),
+    delete: async (id: string): Promise<void> => {
+        await api.delete(`${BASE_URL}/${id}`);
+    },
 
-    deleteAll: (ids: string[]) => api.post<void>(`/api/tracks/delete`, { ids }),
+    deleteAll: async (ids: string[]): Promise<void> => {
+        await api.post<void>(`${BASE_URL}/delete`, { ids });
+    },
 
     uploadFile: async (id: string, file: File) => {
         const formData = new FormData();

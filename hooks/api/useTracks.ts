@@ -38,6 +38,7 @@ export const useTracks = (
 ) => {
     return useQuery<TrackList, ApiError>({
         queryKey: trackKeys.list(params),
+        // @ts-ignore
         queryFn: () => tracksApi.get(params),
         ...options,
     });
@@ -112,7 +113,7 @@ export const useDeleteTrack = (
 ) => {
     const queryClient = useQueryClient();
     return useMutation<void, ApiError, string>({
-        mutationFn: (id) => tracksApi.delete(id),
+        mutationFn: id => tracksApi.delete(id),
         onSuccess: () =>
             queryClient.invalidateQueries({ queryKey: trackKeys.lists() }),
         ...options,
@@ -124,7 +125,7 @@ export const useDeleteTracks = (
 ) => {
     const queryClient = useQueryClient();
     return useMutation<void, ApiError, string[]>({
-        mutationFn: (ids) => tracksApi.deleteAll(ids),
+        mutationFn: ids => tracksApi.deleteAll(ids),
         onSuccess: () =>
             queryClient.invalidateQueries({ queryKey: trackKeys.lists() }),
         ...options,

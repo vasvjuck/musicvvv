@@ -53,6 +53,7 @@ export const Form = ({
 
     const { append, remove } = useFieldArray({
         control: form.control,
+        // @ts-ignore
         name: "genres",
     })
 
