@@ -28,3 +28,24 @@
 
 👉 **Audiowave Visualization**: display an audio wave visualization for the currently played track, providing visual feedback of the audio in real time. Feature is done with `indicator-line.active` animation in `/musicvvv/app/globals.css`
 
+## Installation
+
+Install the project dependencies using npm:
+
+```bash
+npm install
+```
+
+**Environment Variables**
+
+Make sure you have .env file in a root of a project 
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+**Running the Project**
+
+```bash
+npm run dev
+```
