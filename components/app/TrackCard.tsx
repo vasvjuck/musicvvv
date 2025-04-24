@@ -2,7 +2,7 @@ import Image from "next/image";
 import { PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DeleteTrack } from "./actions/DeleteTrack";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EditTrack } from "./actions/EditTrack";
 import { UploadTrackFile } from "./actions/UploadTrackFile";
 import { registerAndToggle } from "@/lib/common/audioManager";
@@ -65,7 +65,7 @@ export const TrackCard = ({ track }: TrackProps) => {
                                         src={audioUrl}
                                     />
                                     {isPlaying ? (
-                                        <div
+                                        <React.Fragment
                                             data-testid={`audio-progress-${track?.id}`}
                                         >
                                             {
@@ -77,7 +77,7 @@ export const TrackCard = ({ track }: TrackProps) => {
                                                     />
                                                 ))
                                             }
-                                        </div>
+                                        </React.Fragment>
                                     ) : (
                                         <PlayIcon size={16} />
                                     )}
