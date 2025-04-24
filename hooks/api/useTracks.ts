@@ -4,6 +4,7 @@ import {
     useQueryClient,
     UseQueryOptions,
     UseMutationOptions,
+    UseQueryResult,
 } from '@tanstack/react-query';
 import { tracksApi } from '@/lib/api/tracks';
 import type {
@@ -35,14 +36,14 @@ type TrackList = { data: Track[]; meta: Meta };
 export const useTracks = (
     params?: TrackParams,
     options?: UseQueryOptions<TrackList, ApiError>
-) => {
-    return useQuery<TrackList, ApiError>({
+): UseQueryResult<TrackList, ApiError> => {
+    return useQuery<TrackList, ApiError, TrackList>({
         queryKey: trackKeys.list(params),
         // @ts-ignore
         queryFn: () => tracksApi.get(params),
         ...options,
-    });
-};
+    })
+}
 
 export const useCreateTrack = (
     options?: MutationConfig<Track, TrackInput>
