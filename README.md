@@ -21,7 +21,6 @@
 
 👉 **Pagination**: added controls to move between pages (e.g., next, previous, specific page numbers).
 
-## Extra Tasks (DONE: ✅)
 👉 **Bulk Delete Functionality**: select multiple or all tracks in the library and delete them in a single action. All the logic can be found in `/musicvvv/components/app/actions/BulkActions.tsx`
 
 👉 **Optimistic Updates**: instantly reflect UI changes when an edit operation is triggered, without waiting for server confirmation, to enhance perceived responsiveness. Implemented using React Query's cache manipulation by updating the relevant state based on cache keys. All the logic can be found in `useTrackUpdate` hook - `/musicvvv/hooks/api/useTracks.ts`
